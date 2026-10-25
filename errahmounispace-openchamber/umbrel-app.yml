@@ -15,7 +15,7 @@ folderAccess:
         readOnly: false
 category: developer
 name: OpenChamber
-version: "2.3.3-umbrel.1"
+version: "2.5.1-umbrel.1"
 tagline: Your AI coding workspace in the browser
 description: >-
   OpenChamber is a web interface for OpenCode, with AI coding sessions, project
@@ -25,7 +25,7 @@ description: >-
 
   Sign in with the app password shown by Umbrel, then connect a model provider
   in OpenChamber. Provider accounts or API usage may incur charges. OpenChamber
-  includes OpenCode 2.0.29.
+  includes OpenCode 2.1.4.
 
 
   Open or create projects under /home/openchamber/workspaces. To use an existing
@@ -47,7 +47,13 @@ description: >-
   tab in that case. Websites can also refuse framing. The web iframe does not
   provide the desktop browser's agent-control features; a compatible browser
   provider extension is needed for agent-driven browser testing.
-releaseNotes: ""
+releaseNotes: >-
+  Update OpenChamber to 2.5.1 and OpenCode to 2.1.4.
+
+
+  Existing project files, settings, sessions, and SSH keys remain in the same
+  persistent directories. Back up app data before updating. LAN preview ports
+  5100 through 5119 and the optional Projects folder setting are unchanged.
 developer: Bohdan Triapitsyn and OpenChamber contributors
 website: https://openchamber.dev
 dependencies: []

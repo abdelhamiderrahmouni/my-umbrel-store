@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: openchamber/openchamber
-          ref: 7521e712e9dbe12cce3c05debaa6d356fedea19b # v2.3.3
+          ref: 3e9ef4db17bd184f1f2713eb6356261304d6aee7 # v2.5.1
           path: upstream
           persist-credentials: false
 
@@ -35,7 +35,7 @@ jobs:
           context: upstream
           platforms: linux/amd64
           load: true
-          tags: errahmounispace/openchamber:2.3.3-local
+          tags: errahmounispace/openchamber:2.5.1-local
 
       - name: Log in to GHCR
         uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
@@ -51,7 +51,7 @@ jobs:
           IMAGE: ghcr.io/${{ github.repository_owner }}/openchamber
         run: |
           IMAGE="${IMAGE,,}"
-          TAG="2.3.3-umbrel.1-build-${GITHUB_RUN_NUMBER}"
+          TAG="2.5.1-umbrel.1-build-${GITHUB_RUN_NUMBER}"
           docker build --tag "${IMAGE}:${TAG}" images/openchamber
           docker push "${IMAGE}:${TAG}"
           {

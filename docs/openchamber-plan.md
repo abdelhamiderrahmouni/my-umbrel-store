@@ -1,5 +1,11 @@
 # OpenChamber on ErrahmouniSpace Store
 
+## Version patch: image published, store changes pending
+
+Requested upgrade: OpenChamber **2.5.1** (commit `3e9ef4db17bd184f1f2713eb6356261304d6aee7`) with OpenCode **2.1.4**. Upstream's Dockerfile bundles OpenCode 2.1.3; our wrapper explicitly installs 2.1.4. Upstream's compatibility gate accepts major 2 with a minimum of 2.1.0.
+
+The upstream 2.5.1 amd64 image and wrapper finished building. `python3 scripts/test-openchamber.py` passed against the new package image, including exact OpenChamber 2.5.1 and OpenCode 2.1.4 version assertions, authentication, the healthcheck, all 20 preview ports, and full recreation preserving six data mounts and SSH identity. Compose is pinned to index digest `sha256:49166477b91d4050fe73f04caec59717e3153dc544065eb13a424d5658b2ce40`. The image was published to GHCR and the exact digest successfully pulled with an empty Docker credentials directory. The previously published 2.3.3 image remains unchanged, and the running local instance has not been replaced. Store changes remain uncommitted/unpushed. An actual update of existing sessions through Umbrel remains untested; back up app data before updating.
+
 Status: package and licensed amd64 image built; local package smoke tests passed. Image published publicly with anonymous pull verified. Actual umbrelOS installation remains unverified.
 
 ## Steps

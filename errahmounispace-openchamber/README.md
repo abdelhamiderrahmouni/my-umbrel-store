@@ -1,10 +1,10 @@
 # OpenChamber for umbrelOS 2.0
 
-Package ID: `errahmounispace-openchamber`. OpenChamber **2.3.3**, OpenCode **2.0.29**, image build **2.3.3-umbrel.1**. This personal-store package is **amd64 only**, not an official Umbrel App Store submission or an ARM64-compatible release.
+Package ID: `errahmounispace-openchamber`. Update target: OpenChamber **2.5.1**, OpenCode **2.1.4**, image build **2.5.1-umbrel.1**. This personal-store package is **amd64 only**, not an official Umbrel App Store submission or an ARM64-compatible release.
 
 ## Release status
 
-The pinned image was published to GHCR on 2026-10-25, made public, and successfully pulled with an empty Docker credentials directory. Its registry digest matches this package. Local package tests passed; actual installation through umbrelOS is still unverified. See [image publishing](../images/openchamber/README.md).
+The 2.5.1-umbrel.1 update passed exact version assertions and the isolated container tests. It is published publicly on GHCR, and an anonymous pull with an empty Docker credentials directory succeeded. Its verified digest is pinned in Compose. Actual installation/update through umbrelOS is still unverified. Back up app data before updating. See [image publishing](../images/openchamber/README.md).
 
 ## First use
 

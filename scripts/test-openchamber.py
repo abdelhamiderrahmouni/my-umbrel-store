@@ -96,6 +96,9 @@ def main():
                 return bindings
 
             bindings = ready_and_login()
+            assert docker("exec", name, "opencode", "--version").strip().removeprefix("opencode ").removeprefix("v") == "2.1.4"
+            assert docker("exec", name, "bun", "-e",
+                          "console.log((await Bun.file('packages/web/package.json').json()).version)").strip() == "2.5.1"
             assert docker("exec", name, "id", "-u").strip() == "1000"
             assert "MIT License" in docker("exec", name, "cat", "/home/openchamber/LICENSE")
             print("PASS: package image, non-root user, license, healthcheck, login and API auth")

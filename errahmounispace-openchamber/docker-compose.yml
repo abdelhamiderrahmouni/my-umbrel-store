@@ -7,7 +7,7 @@ services:
   server:
     # Published to GHCR; anonymous pull verified on 2026-10-25.
     # amd64 only. Do not replace this with a moving/latest image.
-    image: ghcr.io/abdelhamiderrahmouni/openchamber:2.3.3-umbrel.1@sha256:bd1c799a37ebdd5877318f6c4e5e603e4c9061644b0fd9b04baacb7bb6f7ae44
+    image: ghcr.io/abdelhamiderrahmouni/openchamber:2.5.1-umbrel.1@sha256:49166477b91d4050fe73f04caec59717e3153dc544065eb13a424d5658b2ce40
     platform: linux/amd64
     restart: on-failure
     init: true
