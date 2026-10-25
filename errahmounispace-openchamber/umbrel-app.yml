@@ -1,0 +1,64 @@
+manifestVersion: 2.0
+id: errahmounispace-openchamber
+storage:
+  dataRoot: data
+folderAccess:
+  - id: projects
+    name: Projects
+    note: >-
+      Optional: select an existing project folder. It appears at
+      /home/openchamber/workspaces and must be writable by UID/GID 1000.
+      Agents can edit or delete files in this folder. Back it up separately.
+    mounts:
+      - service: server
+        targetPath: /home/openchamber/workspaces
+        readOnly: false
+category: developer
+name: OpenChamber
+version: "2.3.3-umbrel.1"
+tagline: Your AI coding workspace in the browser
+description: >-
+  OpenChamber is a web interface for OpenCode, with AI coding sessions, project
+  files, Git workflows, and a terminal. This community package targets x86-64
+  (amd64) devices running umbrelOS 2.0. ARM64 is not supported by this image.
+
+
+  Sign in with the app password shown by Umbrel, then connect a model provider
+  in OpenChamber. Provider accounts or API usage may incur charges. OpenChamber
+  includes OpenCode 2.0.29.
+
+
+  Open or create projects under /home/openchamber/workspaces. To use an existing
+  folder, select it in the app's Projects folder setting. Agents and terminal
+  commands can modify or delete any mounted project files. Settings, sessions,
+  provider credentials, and SSH keys are persisted in the app's data folder.
+
+
+  Development preview ports 5100 through 5119 are exposed on your LAN. Start
+  a dev server on 0.0.0.0 using one of these ports, then open
+  http://YOUR-UMBREL-IP:5100 (or the chosen port) in the preview panel or a
+  separate browser tab. Use your Umbrel address, not localhost on your laptop.
+  These preview ports are plain HTTP and are NOT protected by Umbrel or
+  OpenChamber login. Use only a trusted LAN or private VPN, add authentication
+  to sensitive dev apps, and never forward these ports to the internet.
+
+
+  A browser may block HTTP previews inside HTTPS OpenChamber; use a separate
+  tab in that case. Websites can also refuse framing. The web iframe does not
+  provide the desktop browser's agent-control features; a compatible browser
+  provider extension is needed for agent-driven browser testing.
+releaseNotes: ""
+developer: Bohdan Triapitsyn and OpenChamber contributors
+website: https://openchamber.dev
+dependencies: []
+repo: https://github.com/openchamber/openchamber
+support: https://github.com/abdelhamiderrahmouni/my-umbrel-store/issues
+port: 3939
+icon: https://raw.githubusercontent.com/openchamber/openchamber/7521e712e9dbe12cce3c05debaa6d356fedea19b/packages/electron/resources/icons/app-icon.png
+gallery: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+deterministicPassword: true
+submitter: Abdelhamid Errahmouni
+submission: https://github.com/abdelhamiderrahmouni/my-umbrel-store

@@ -16,7 +16,7 @@ https://github.com/abdelhamiderrahmouni/my-umbrel-store
 
 ## Apps
 
-No apps are published yet. OpenChamber is a candidate for the first app.
+- [OpenChamber](errahmounispace-openchamber/README.md): AI coding workspace with OpenCode, persistent projects, and 20 LAN preview ports. Targets umbrelOS 2.0 on amd64. **Image published with anonymous pull verified; Umbrel device verification is still pending.**
 
 ## Adding an app
 

@@ -1,0 +1,61 @@
+name: Build OpenChamber image
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Check out store
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Check out pinned OpenChamber release
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: openchamber/openchamber
+          ref: 7521e712e9dbe12cce3c05debaa6d356fedea19b # v2.3.3
+          path: upstream
+          persist-credentials: false
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3
+
+      - name: Build upstream image
+        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8 # v6
+        with:
+          context: upstream
+          platforms: linux/amd64
+          load: true
+          tags: errahmounispace/openchamber:2.3.3-local
+
+      - name: Log in to GHCR
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # The wrapper uses the previous step's locally loaded base image.
+      - name: Publish licensed image
+        id: publish
+        env:
+          IMAGE: ghcr.io/${{ github.repository_owner }}/openchamber
+        run: |
+          IMAGE="${IMAGE,,}"
+          TAG="2.3.3-umbrel.1-build-${GITHUB_RUN_NUMBER}"
+          docker build --tag "${IMAGE}:${TAG}" images/openchamber
+          docker push "${IMAGE}:${TAG}"
+          {
+            echo '### OpenChamber image published'
+            echo "Image: \`${IMAGE}:${TAG}\`"
+            echo 'Make the package public in GHCR, verify an anonymous pull, and pin its digest in the Umbrel Compose file before release.'
+          } >> "$GITHUB_STEP_SUMMARY"

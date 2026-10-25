@@ -1,1 +1,6 @@
 .DS_Store
+
+# Never commit app runtime state or secrets; retain empty-directory scaffolding.
+errahmounispace-openchamber/data/**
+!errahmounispace-openchamber/data/**/
+!errahmounispace-openchamber/data/**/.gitkeep

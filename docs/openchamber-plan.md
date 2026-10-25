@@ -1,6 +1,26 @@
 # OpenChamber on ErrahmouniSpace Store
 
-Status: planning only; no app package or runtime deployment yet.
+Status: package and licensed amd64 image built; local package smoke tests passed. Image published publicly with anonymous pull verified. Actual umbrelOS installation remains unverified.
+
+## Steps
+
+- [x] Research upstream deployment, OpenCode compatibility, storage, and authentication.
+- [x] Confirm amd64 hardware, existing-project-folder support, and LAN preview access.
+- [x] Create the Umbrel manifest, Compose package, persistent directories, and image build workflow.
+- [x] Build the licensed image and verify local startup, authentication, preview mappings, and recreation persistence.
+- [x] Publish the pinned image publicly and pass anonymous image checks.
+- [ ] Install through umbrelOS 2.0 and verify proxy behavior, folder settings, and a real coding workflow.
+
+## Implementation evidence (2026-10-25)
+
+- Package: `errahmounispace-openchamber/`. UI port **3939**, internal web port **3000**, preview ports **5100–5119/TCP**. Owner explicitly approved exposing previews to the LAN despite their lack of proxy authentication. The description and README warn about trusted-network use and HTTP/HTTPS iframe limitations.
+- Owner approved publishing the store-maintained image. The initial GHCR push failed with insufficient token scopes; after authorization was refreshed, the upload succeeded. GHCR visibility was changed from private to public and an anonymous Docker pull using an empty credentials directory succeeded. The registry digest matches the package's pinned digest.
+- Built `ghcr.io/abdelhamiderrahmouni/openchamber:2.3.3-umbrel.1` locally. The wrapper adds only the upstream MIT license and image metadata. Index digest: `sha256:bd1c799a37ebdd5877318f6c4e5e603e4c9061644b0fd9b04baacb7bb6f7ae44`. Runnable platform: **linux/amd64 only**; ARM64 support remains deferred and is not claimed.
+- `python3 scripts/test-openchamber.py` passed against the package's exact local image/configuration: UID 1000, license inclusion, package healthcheck, OpenCode readiness, password login using a 64-character hex password, unauthenticated session and Git API denial, UI HTML, all 20 preview mappings, and full container recreation preserving markers in all six data mounts plus generated SSH identity. It uses disposable fixtures and random loopback host ports, not the owner's live projects or LAN ports.
+- Upstream Umbrel static linter: **0 errors**, one `ports.unresolved` warning because it cannot expand the preview range. Manually searched the official store's literal YAML/shell ports: no conflicts found for **3939** or **5100–5119**. Actual device port availability still needs testing.
+- `--check-images` now resolves the public image successfully but reports `image.architecture`: the official-store linter requires both amd64 and arm64, whereas this approved personal-store package intentionally targets amd64 only. The preview range still produces the documented `ports.unresolved` warning. No claim of official-store multi-architecture compliance.
+- GitHub workflow passed `actionlint` 1.7.12. `git diff --check` passed.
+- No installation, changes, or runtime tests were performed on the owner's Umbrel device. Image layers contain no mounted project data, provider credentials, or app password; no working container was committed to an image.
 
 ## Goal
 
@@ -14,7 +34,7 @@ Upstream deployment findings and citations: [OpenChamber research](openchamber-r
 - Proposed release: **2.3.3**, commit `7521e712e9dbe12cce3c05debaa6d356fedea19b`, paired with bundled **OpenCode 2.0.29**.
 - Owner's hardware: **x86-64 / amd64**. Test this architecture first; ARM64 support remains a separate build/test gate.
 - Owner wants an **existing project folder**, not only an app-owned workspace. Offer an explicit writable `folderAccess` setting mapped to `/home/openchamber/workspaces`; select only the intended project directory. Keep a persistent app-owned workspace as the default before selection. Explain that agents can edit/delete the selected folder's contents. Validate UID/GID 1000 write access without recursively changing ownership of user files.
-- Main blocker: **no official publicly pullable image was verified**. Upstream Compose builds from source. Proposed image: `ghcr.io/abdelhamiderrahmouni/openchamber`, subject to owner approval and registry availability; it is not an existing verified image.
+- No official upstream public image was verified. Upstream Compose builds from source. Our owner-approved `ghcr.io/abdelhamiderrahmouni/openchamber` image is now published publicly, and anonymous access is verified.
 
 ## Packaging approach
 
@@ -83,10 +103,10 @@ Do not add databases, helper services, custom images, lifecycle hooks, or HTTPS-
 
 ## Owner decisions still needed
 
-- Approve building/publishing a store-maintained image under the owner's GHCR namespace, or supply another trusted maintained image to evaluate.
+- Public image publishing and anonymous pull verification are complete. Committing/pushing the app package and actual Umbrel installation remain separate steps.
 - Which existing project folder should be selected? Prefer selection in Umbrel's UI rather than hardcoding a host path.
 - Which model provider/login flow should the first end-to-end test cover? No credentials needed for planning.
-- Is access limited to the local network/private VPN, or is public-domain access desired? Default plan: no public exposure.
+- Local network/private VPN only for previews, as approved. No internet port forwarding or public preview exposure is configured.
 
 ## Umbrel primary sources
 
